@@ -1,6 +1,18 @@
 #------------------------------------------------------------------------------
 # Variables for EFS Module
 #------------------------------------------------------------------------------
+variable "create_security_group" {
+  description = "Decides whether to create the default security group. Defaults to true."
+  default     = true
+  type        = bool
+}
+
+variable "additional_security_group_ids" {
+  description = "Additional security groups to add to EFS mount points."
+  default     = []
+  type        = list(string)
+}
+
 variable "security_group_ingress" {
   description = "Can be specified multiple times for each ingress rule. "
   type = list(object({

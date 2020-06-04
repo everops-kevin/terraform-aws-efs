@@ -3,6 +3,8 @@
 #------------------------------------------------------------------------------
 
 resource "aws_security_group" "this" {
+ count = var.create_security_group ? 1 : 0 
+ 
   name        = var.name
   description = "Allows for NFS traffic for ${var.name}"
   vpc_id      = var.vpc_id
@@ -49,10 +51,11 @@ resource "aws_efs_file_system" "this" {
 }
 
 resource "aws_efs_mount_target" "this" {
-  count          = length(var.subnet_ids) > 0 ? length(var.subnet_ids) : 0
-  file_system_id = aws_efs_file_system.this.id
-  subnet_id      = var.subnet_ids[count.index]
-  security_groups = [
-    aws_security_group.this.id
-  ]
+  count           = length(var.subnet_ids) > 0 ? length(var.subnet_ids) : 0
+  file_system_id  = aws_efs_file_system.this.id
+  subnet_id       = var.subnet_ids[count.index]
+  security_groups = concat(
+    [aws_security_group.this.id],
+    var.additional_security_group_ids
+  )
 }
