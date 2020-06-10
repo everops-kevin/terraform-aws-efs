@@ -7,6 +7,11 @@ variable "create_security_group" {
   type        = bool
 }
 
+variable "throughput_in_mibps" {
+  description = "Throughput provisioned for the EFS"
+  type        = number
+}
+
 variable "additional_security_group_ids" {
   description = "Additional security groups to add to EFS mount points."
   default     = []
