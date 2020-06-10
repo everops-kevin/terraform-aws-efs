@@ -9,7 +9,14 @@ variable "create_security_group" {
 
 variable "throughput_in_mibps" {
   description = "Throughput provisioned for the EFS"
+  default     = null
   type        = number
+}
+
+variable "throughput_mode" {
+  description = "Throughput mode provisioned or bursting"
+  default     = "bursting"
+  type        = string
 }
 
 variable "additional_security_group_ids" {

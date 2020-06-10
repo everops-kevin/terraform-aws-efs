@@ -41,8 +41,9 @@ resource "aws_security_group" "this" {
 
 resource "aws_efs_file_system" "this" {
   creation_token = var.name
-  
+
   provisioned_throughput_in_mibps = var.throughput_in_mibps
+  throughput_mode = var.throughput_mode
   tags = merge(
     {
       "Name" = var.name
